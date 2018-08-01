@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.springframework.cloud:spring-cloud-commons:1.1.6.RELEASE">
+    <CLASSES>
+      <root url="jar://F:/SW/Maven/apache-maven-3.5.0/.m2/repository/org/springframework/cloud/spring-cloud-commons/1.1.6.RELEASE/spring-cloud-commons-1.1.6.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://F:/SW/Maven/apache-maven-3.5.0/.m2/repository/org/springframework/cloud/spring-cloud-commons/1.1.6.RELEASE/spring-cloud-commons-1.1.6.RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://F:/SW/Maven/apache-maven-3.5.0/.m2/repository/org/springframework/cloud/spring-cloud-commons/1.1.6.RELEASE/spring-cloud-commons-1.1.6.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

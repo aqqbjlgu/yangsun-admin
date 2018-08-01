@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--               com.youngsun.admin.cms.mapper.ChannelMapper-->
+<mapper namespace="com.youngsun.admin.cms.mapper.ChannelMapper">
+	<!--<resultMap id="resultMap" type="com.youngsun.admin.cms.entity.ChannelSimpleEntity">-->
+		<!--<id column = "id" property="id"/>-->
+		<!--<result property="name" column="t_name"/>-->
+		<!--<result property="url" column="t_url"/>-->
+		<!--<result property="sort" column="t_sort"/>-->
+		<!--<result property="pageSize" column="t_page_size"/>-->
+	<!--</resultMap>-->
+
+ 	<select id="getSimpleChannel" parameterType = "com.youngsun.admin.cms.vo.ChannelVo" resultType = "com.youngsun.admin.cms.vo.ChannelSimpleVo">
+		SELECT
+			r.t_name name,
+			r.t_url url,
+			r.t_sort sort,
+			r.t_type type,
+			r.t_page_size pageSize,
+			r.t_parent_id parentId,
+			r.t_is_leaf leaf,
+			r.id id
+		FROM
+			t_channel r
+		<where>
+			r.t_is_deleted = false
+			<if test="parentId != null">
+				AND t_parent_id = #{parentId}
+			</if>
+			<if test="name != null">
+				AND t_name like Concat('%',#{name},'%')
+			</if>
+			<if test="title != null">
+				AND t_title like Concat('%',#{title},'%')
+			</if>
+			<if test="leaf != null">
+				AND t_is_leaf = #{leaf}
+			</if>
+			<if test="type != null and type == 'other'">
+				AND t_type != "single"
+			</if>
+		</where>
+ 	</select>
+
+</mapper>

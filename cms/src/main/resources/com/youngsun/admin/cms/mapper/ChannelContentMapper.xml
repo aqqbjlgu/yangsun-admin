@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youngsun.admin.cms.mapper.ChannelContentMapper">
+    <insert id="save" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Integer" keyProperty="id"
+                   order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_channel_content
+        (
+            t_channel_id,
+            t_content_id
+        )
+        values
+        <foreach collection="list" item="channelContent" index="index" separator=",">
+            (
+                #{channelContent.channelId},
+                #{channelContent.contentId}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youngsun.admin.cms.mapper.ContentMapper">
+
+ 	<select id="getSimpleContent" parameterType = "com.youngsun.admin.cms.vo.ContentVo" resultType = "com.youngsun.admin.cms.vo.ContentSimpleVo">
+		SELECT
+			r.t_title title,
+			r.t_is_recommend hasRecommend,
+			r.t_sort sort,
+			r.t_status status,
+			r.t_insert_date insertDate,
+			r.t_update_date updateDate,
+			r.t_comments_count commentsCount,
+			r.t_ups_count upsCount,
+			r.t_views_count viewsCount,
+			r.t_title_img titleImg,
+			r.t_channel_type channelType,
+			r.t_author author,
+			r.id id
+		FROM
+			t_content r
+		<where>
+			r.t_is_deleted = false
+			<if test="title != null">
+				AND t_title like Concat('%',#{title},'%')
+			</if>
+			<if test="type != null">
+				AND t_type = #{type}
+			</if>
+			<if test="hasRecommend != null">
+				AND t_is_recommend = #{hasRecommend}
+			</if>
+		</where>
+		ORDER BY t_sort, t_update_date DESC
+ 	</select>
+
+	<select id="getSimpleContentByIds" resultType = "com.youngsun.admin.cms.vo.ContentSimpleVo">
+		SELECT
+		r.t_title title,
+		r.t_is_recommend hasRecommend,
+		r.t_sort sort,
+		r.t_status status,
+		r.t_insert_date insertDate,
+		r.t_update_date updateDate,
+		r.t_comments_count commentsCount,
+		r.t_ups_count upsCount,
+		r.t_views_count viewsCount,
+		r.t_title_img titleImg,
+		r.t_channel_type channelType,
+		r.t_author author,
+		r.id id
+		FROM
+		t_content r
+		<where>
+			r.t_is_deleted = false AND
+			r.id in
+			(SELECT cc.t_content_id FROM  t_channel_content cc WHERE cc.t_channel_id = #{channerId})
+		</where>
+		ORDER BY t_sort, t_update_date DESC
+	</select>
+
+	<select id="countSimpleContentByChannelId" resultType = "java.lang.Integer">
+		SELECT
+		count(*)
+		FROM
+		t_content r
+		<where>
+			r.t_is_deleted = false AND
+			r.id in
+			(SELECT cc.t_content_id FROM  t_channel_content cc WHERE cc.t_channel_id = #{channerId})
+		</where>
+	</select>
+
+	<select id="getSimplePictureContentById" resultType = "com.youngsun.admin.cms.vo.ContentSimpleVo">
+		SELECT
+		r.t_title title,
+		r.t_is_recommend hasRecommend,
+		r.t_sort sort,
+		r.t_status status,
+		r.t_insert_date insertDate,
+		r.t_update_date updateDate,
+		r.t_comments_count commentsCount,
+		r.t_ups_count upsCount,
+		r.t_views_count viewsCount,
+		r.t_title_img titleImg,
+		t.t_pic_url singlePictureUrl,
+		t_pic_desc pictureDesc,
+		t.id pictureContentId,
+		r.t_channel_type channelType,
+		r.t_author author,
+		r.id id
+		FROM
+		t_content r LEFT JOIN t_pic_content t ON t_content_id = r.id
+		<where>
+			r.t_is_deleted = false AND
+			t.t_is_deleted = false AND
+			r.id = #{id}
+		</where>
+		ORDER BY r.t_sort, r.t_update_date DESC
+	</select>
+</mapper>

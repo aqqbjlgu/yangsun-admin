@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youngsun.admin.cms.mapper.PictureContentMapper">
+    <insert id="save" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Integer" keyProperty="id"
+                   order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_pic_content
+        (
+            t_pic_url,
+            t_content_id,
+            t_pic_desc,
+            t_insert_date,
+            t_insert_userid,
+            t_update_date,
+            t_update_userid,
+            t_is_deleted
+        )
+        values
+        <foreach collection="list" item="pictureContent" index="index" separator=",">
+            (
+                #{pictureContent.singlePictureUrl},
+                #{pictureContent.contentId},
+                #{pictureContent.pictureDesc},
+                #{pictureContent.insertDate},
+                #{pictureContent.insertUserId},
+                #{pictureContent.upDateDate},
+                #{pictureContent.upDateUserId},
+                false
+            )
+        </foreach>
+    </insert>
+
+</mapper>
